@@ -10,7 +10,7 @@ using namespace std;
 
 
 //TODO:
-// the second part is VERY slow (like it takes 30 minutes to run) because
+// the second part is VERY slow (like it takes 10 minutes to run) because
 // it's nearly a graphical solution in its inception. Think of a faster algorithm
 char changeDirection(char currentDirection);
 tuple<int, bool, tuple<int, int>> checkNearestBlock(tuple<int, int> pos, char direction, vector<tuple<int, int>> blockPositions, int maxX, int maxY);
@@ -97,12 +97,14 @@ int main() {
         for(char c : row) {
             switch(c) {
                 case '.':
-                    updatedMap = map;
-                    updatedMap.at(y2)[x2] = '#';
-                    visitedPositionsWithDirection.clear();
-                    counter++;
-                    if (simulationLooping(updatedMap)) {
-                        totalLoopingConfig++;
+                    if (find(visitedPositions.begin(), visitedPositions.end(), make_tuple(x2, y2)) != visitedPositions.end()) {
+                        updatedMap = map;
+                        updatedMap.at(y2)[x2] = '#';
+                        visitedPositionsWithDirection.clear();
+                        counter++;
+                        if (simulationLooping(updatedMap)) {
+                            totalLoopingConfig++;
+                        }
                     }
                     break;
                 default:
